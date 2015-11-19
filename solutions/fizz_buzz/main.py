@@ -18,17 +18,18 @@ def calc(x, y, n):
     t = partial(transplitter,x, y)
     return map(t, xrange(1, n+1))
 
-test_cases = open(sys.argv[1], 'r')
+if __name__ == '__main__':
+    test_cases = open(sys.argv[1], 'r')
 
-for test in test_cases:
-    # ignore test if it is an empty line
-    if not test.strip():
-        continue
-    # 'test' represents the test case, do something with it
-    try:
-        (x, y, n) = map(lambda x:int(x.strip()), test.split(' '))
-        print ' '.join(calc(x,y,n))
-    except ValueError:
-        continue
+    for test in test_cases:
+        # ignore test if it is an empty line
+        if not test.strip():
+            continue
+        # 'test' represents the test case, do something with it
+        try:
+            (x, y, n) = map(lambda x:int(x.strip()), test.split(' '))
+            print ' '.join(calc(x,y,n))
+        except ValueError:
+            continue
 
-test_cases.close()
+    test_cases.close()

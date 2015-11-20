@@ -11,7 +11,6 @@ class SolverTestCase(unittest.TestCase):
         self.assertEquals(16, main.solver(13, 8))
         self.assertEquals(32, main.solver(17, 16))
 
-
         self.assertEquals(16, bench.solver2(13, 8))
         self.assertEquals(32, bench.solver2(17, 16))
 

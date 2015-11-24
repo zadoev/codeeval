@@ -6,6 +6,7 @@ from solutions.multiples_of_a_number import main
 
 from solutions.multiples_of_a_number import bench
 
+
 class SolverTestCase(unittest.TestCase):
     def test_gt(self):
         self.assertEquals(16, main.solver(13, 8))

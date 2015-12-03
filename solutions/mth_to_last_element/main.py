@@ -24,6 +24,7 @@ g
 """
 
 import sys
+from itertools import ifilter
 
 
 def solver(seq):
@@ -53,5 +54,5 @@ def solver(seq):
 
 if __name__ == '__main__':
     with open(sys.argv[1]) as data:
-        for result in filter(None, (solver(line.split()) for line in data)):
+        for result in ifilter(None, (solver(line.split()) for line in data)):
             print result

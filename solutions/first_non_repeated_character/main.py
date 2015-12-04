@@ -24,7 +24,7 @@ h
 import sys
 
 from collections import Counter
-from itertools import ifilter, groupby
+from itertools import ifilter
 
 
 def solve(seq):

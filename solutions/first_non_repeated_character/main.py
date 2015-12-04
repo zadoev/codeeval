@@ -24,7 +24,7 @@ h
 import sys
 
 from collections import Counter
-from itertools import ifilter
+from itertools import ifilter, groupby
 
 
 def solve(seq):
@@ -46,8 +46,7 @@ def solve(seq):
     :rtype: basestring
     """
     c = Counter(seq)
-    uniques = [k for k, v in c.iteritems() if v == 1]
-    return next(ifilter(lambda i: i in uniques, seq))
+    return next(ifilter(lambda i: c.get(i) == 1, seq))
 
 
 if __name__ == '__main__':

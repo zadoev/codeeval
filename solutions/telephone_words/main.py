@@ -1,4 +1,4 @@
-__author__ = 'zadoev@gmail.com'
+from __future__ import print_function
 """
 CHALLENGE DESCRIPTION:
 
@@ -59,6 +59,7 @@ g1jjad0,g1jjae0,g1jjaf0,g1jjbd0,g1jjbe0,g1jjbf0,g1jjcd0,g1jjce0,g1jjcf0
 ,i1llad0,i1llae0,i1llaf0,i1llbd0,i1llbe0,i1llbf0,i1llcd0,i1llce0,i1llcf0
 
 """
+
 from itertools import product, imap
 import sys
 
@@ -78,22 +79,26 @@ char_map = {
 
 def solve(phone):
     """
-    >>> solve('02')
-    '0a,0b,0c'
-    >>> solve('802')
-    't0a,t0b,t0c,u0a,u0b,u0c,v0a,v0b,v0c'
+    >>> list(solve('02'))
+    [('0', 'a'), ('0', 'b'), ('0', 'c')]
+    >>> list(solve('802'))
+    [('t', '0', 'a'), ('t', '0', 'b'), ('t', '0', 'c'), ('u', '0', 'a'), ('u', '0', 'b'), ('u', '0', 'c'), ('v', '0', 'a'), ('v', '0', 'b'), ('v', '0', 'c')]
 
     :param phone:
     :type phone:
     :return:
     :rtype:
     """
-    return ','.join(
-        imap(lambda s: ''.join(s), product(*(char_map[i] for i in phone)))
-    )
+    for i in product(*(char_map[i] for i in phone)):
+        yield i
 
 
 if __name__ == '__main__':
     with open(sys.argv[1]) as test_cases:
         for line in test_cases:
-            print solve(line.rstrip())
+            counter = True
+            for word in solve(line.rstrip()):
+                print(*(',', ''.join(word))[counter:], end='', sep='')
+                counter = False
+            print()
+

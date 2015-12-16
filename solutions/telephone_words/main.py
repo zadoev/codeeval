@@ -77,28 +77,14 @@ char_map = {
 }
 
 
-def solve(phone):
-    """
-    >>> list(solve('02'))
-    [('0', 'a'), ('0', 'b'), ('0', 'c')]
-    >>> list(solve('802'))
-    [('t', '0', 'a'), ('t', '0', 'b'), ('t', '0', 'c'), ('u', '0', 'a'), ('u', '0', 'b'), ('u', '0', 'c'), ('v', '0', 'a'), ('v', '0', 'b'), ('v', '0', 'c')]
-
-    :param phone:
-    :type phone:
-    :return:
-    :rtype:
-    """
-    for i in product(*(char_map[i] for i in phone)):
-        yield i
-
-
 if __name__ == '__main__':
     with open(sys.argv[1]) as test_cases:
         for line in test_cases:
-            counter = True
-            for word in solve(line.rstrip()):
-                print(*(',', ''.join(word))[counter:], end='', sep='')
-                counter = False
+
+            gen = product(*(char_map[i] for i in line.rstrip()))
+
+            print(''.join(next(gen)), end='', sep='')
+            for word in gen:
+                print(',', ''.join(word), end='', sep='')
             print()
 

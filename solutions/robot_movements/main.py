@@ -21,8 +21,16 @@ def solver(area, pos, l):
     """
     >>> solver([[False, False], [False, False]], (0,0), 1)
     2
-    >>> solver([[False, False, False], [False, False, False], [False, False, False]], (0,0), 2)
-    5
+    >>> solver(
+    ...    [
+    ...        [False, False, False],
+    ...        [False, False, False],
+    ...        [False, False, False]
+    ...    ],
+    ...    (0,0),
+    ...    2
+    ... )
+    12
 
     :param area:
     :type area:

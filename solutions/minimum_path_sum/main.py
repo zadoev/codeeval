@@ -29,35 +29,37 @@ Print out the minimum path sum for each matrix. E.g.
 import sys
 
 
-class Solver(object):
+def solve(matrix, size):
     """
-    >>> s = Solver([[4, 6], [2, 8]])
-    >>> s.solve()
+    >>> solve([[4, 6], [2, 8]], 2)
     14
-    >>> s = Solver([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-    >>> s.solve()
+
+    >>> solve([[1, 2, 3], [4, 5, 6], [7, 8, 9]], 3)
     21
 
+    :param matrix: input matrix
+    :type matrix: list of lists
+    :param size: matrix size
+    :type size: int
+    :return: minimum path sum for matrix
+    :rtype: int
     """
-    def __init__(self, area):
-        self.area = area
-        self.size = len(area) - 1
-        self.min_sum = None
+    if size == 1:
+        return matrix[0][0]
 
-    def solve(self, path_sum=0, x=0, y=0):
-        if x == self.size and y == self.size:
-            self.min_sum = min(
-                filter(None, [self.min_sum, path_sum + self.area[x][y]])
-            )
+    for x in xrange(size-2, -1, -1):
+        # calculate min paths for right, bottom borders
+        matrix[size-1][x] += matrix[size-1][x+1]
+        matrix[x][size-1] += matrix[x+1][size-1]
 
-        if x + 1 <= self.size:
-            self.solve(path_sum + self.area[x][y], x+1, y)
+    for y in xrange(size - 2, -1, -1):
+        for x in xrange(size-2, -1, -1):
+            # calculate min path from right and bottom
+            # doing from right to left, from bottom to up
+            # excluding pre calculated borders
+            matrix[x][y] += min(matrix[x+1][y], matrix[x][y+1])
 
-        if y + 1 <= self.size:
-            self.solve(path_sum + self.area[x][y], x, y + 1)
-
-        return self.min_sum
-
+    return matrix[0][0]
 
 if __name__ == '__main__':
     with open(sys.argv[1]) as test_cases:
@@ -66,5 +68,4 @@ if __name__ == '__main__':
             area = []
             for i in xrange(size):
                 area.append(map(int, next(test_cases).rstrip().split(',')))
-            solver = Solver(area)
-            print solver.solve()
+            print solve(area, size)

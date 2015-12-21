@@ -22,23 +22,24 @@ Print out the matrix in clockwise fashion, one per line, space delimited. E.g.
 
 import sys
 
-def solver(n, m, items):
+
+def solver(rows, columns, input_items):
     """
     >>> list(solver(3,3, ['1','2','3','4','5','6','7','8','9']))
     ['1 2 3', '6 9', '8 7', '4', '5']
 
-    :param n: rows
-    :type n: int
-    :param m: columns
-    :type m: int
-    :param items: input data
-    :type items: list
+    :param rows: number of rows in array
+    :type rows: int
+    :param columns: number of columns
+    :type columns: int
+    :param input_items: input data
+    :type input_items: list
     :return: generator for strings
     :rtype: list[strings]
     """
     data = []
-    for i in xrange(n):
-        data.append(items[i*m:(i+1)*m])
+    for i in xrange(rows):
+        data.append(input_items[i*columns:(i+1)*columns])
     while data:
         row = data.pop(0)
         data = zip(*data)
@@ -51,6 +52,6 @@ if __name__ == '__main__':
         for line in test_cases:
             n, m, items = line.split(';')
             n, m = int(n), int(m)
-            for row in solver(n, m, items.split()):
-                print (row, end=' ')
-            print('')
+            for part in solver(n, m, items.split()):
+                print (part, end=' ')
+            print()

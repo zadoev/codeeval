@@ -51,23 +51,37 @@ cards_map = {
     str(label): value + 2 for value, label in enumerate(range(2, 10) + list('TJQKA'))
 }
 
-HIGHT_CARD = 1
+HIGH_CARD = 1
 ONE_PAIR = 2
 TWO_PAIRS = 3
 THREE_OF_KIND = 4
-STRAIGH = 5
+STRAIGHT = 5
 FLUSH = 6
 FULL_HOUSE = 7
 FOUR_OF_KIND = 8
-STRAIGH_FLUSH = 9
-ROYAL_FLUSH = 10
+STRAIGHT_FLUSH = 11
+ROYAL_FLUSH = 12
 
-COMBINATION_LENGTH_HELPER = {3: TWO_PAIRS, 4: ONE_PAIR, 5: HIGHT_CARD}
+COMBO_FROM_COUNTS = {
+    (4, 1): FOUR_OF_KIND,
+    (3, 2): FULL_HOUSE,
+    (3, 1, 1): THREE_OF_KIND,
+    (2, 2, 1): TWO_PAIRS,
+    (2, 1, 1, 1): ONE_PAIR,
+    (1, 1, 1, 1, 1): HIGH_CARD
+}
 
 
 def hand_builder(input):
     """
-    Pretty dirty, need to refactoring
+    1. Detect flush, straight or combo, return it
+    2. count each card, return sorted list,
+        1. by counts (4 kinds will be first)
+        2. by values (2 pairs will be sorted by pair values)
+        3. tail will be sorted kickers
+
+    Then i need compare hands as lists [5, 6] >  [3, 10, 2, 3]
+    (straight > 2 pairs)
 
     >>> hand_builder('2D 3H 4D 5H 6D')  # straight
     [5, 6]
@@ -76,13 +90,13 @@ def hand_builder(input):
     [6, 7]
 
     >>> hand_builder('AD JD QD KD TD')  #  high straight flush eg royal flush
-    [9, 14]
+    [11, 14]
 
     >>> hand_builder('2D 3D 4D 5D 6D')  #  high straight flush eg royal flush
-    [9, 6]
+    [11, 6]
 
     >>> hand_builder('TD TH TS TC AD')  #  4 of kinds
-    [8, 14]
+    [8, 10, 14]
 
     >>> hand_builder('TD TH TS 2C 2D')  #  flush
     [7, 10, 2]
@@ -115,42 +129,24 @@ def hand_builder(input):
         suites.add(c)
         cards.append(cards_map[s])
     cards = sorted(cards)
+
     is_flush = len(suites) == 1
     is_straight = map(lambda x: x - cards[0], cards) == [0, 1, 2, 3, 4]
 
-    if is_straight:
-        if is_flush:
-            return [STRAIGH_FLUSH, cards[4]]
-        return [STRAIGH, cards[4]]
-
-    if is_flush:
-        return [FLUSH, cards[4]]
+    if is_straight or is_flush:
+        return [STRAIGHT * is_straight + FLUSH * is_flush, cards[4]]
 
     card_combinations = Counter(cards)
 
-    num = len(card_combinations.keys())
-
-    r = {v: k for k, v in card_combinations.items()}
-    if num == 2:  # full house or 4 of kind
-        if 4 in r:
-            return [FOUR_OF_KIND, r[1]]
-
-        return [FULL_HOUSE, r[3], r[2]]
-    elif num == 3:
-        if 3 in r:
-            combo = [THREE_OF_KIND]
-        else:
-            combo = [TWO_PAIRS]
-    else:
-        combo = [COMBINATION_LENGTH_HELPER[num]]
-
     kickers = sorted(
-        card_combinations.items(), key=lambda x: (x[1],x[0]), reverse=True
+        card_combinations.items(), key=lambda x: (x[1], x[0]), reverse=True
     )
 
-    kickers = [i for i, v in kickers]
+    combo = COMBO_FROM_COUNTS[
+        tuple(sorted(card_combinations.values(), reverse=True))
+    ]
 
-    return combo + kickers
+    return [combo] + [i for i, v in kickers]
 
 if __name__ == '__main__':
     with open(sys.argv[1]) as test_cases:

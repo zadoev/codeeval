@@ -23,6 +23,7 @@ number of drops you must make to determine this floor.
 """
 import sys
 import math
+from collections import defaultdict
 
 
 def solver(k, n):
@@ -46,18 +47,20 @@ def solver(k, n):
     :rtype: int
     """
 
-    matrix = [i[:] for i in [[0] * (k + 1)] * (n + 1)]
+    matrix = defaultdict(lambda : defaultdict(int))
     for floor in xrange(1, n + 1):
         matrix[floor][1] = floor
 
-    matrix[1] = [1] * (k + 1)
+    for egg in xrange(k+1):
+        matrix[1][egg] = 1
 
     for floor in xrange(2, n+1):
         ln = 1 + int(math.log(n, 2))
         egg_range = k + 1
         if k + 1 > ln:
             egg_range = ln
-            matrix[floor][ln:] = [ln] * (k + 1 - ln)
+            for egg in xrange(ln, k+1):
+                matrix[floor][egg] = ln
 
         for egg in xrange(2, egg_range):
             i = 1

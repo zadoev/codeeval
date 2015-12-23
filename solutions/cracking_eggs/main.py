@@ -23,7 +23,7 @@ number of drops you must make to determine this floor.
 """
 import sys
 import math
-from collections import defaultdict
+from ctypes import c_uint
 
 
 def solver(k, n):
@@ -46,8 +46,10 @@ def solver(k, n):
     :return: minimum drops for worst keys
     :rtype: int
     """
+    KInts = c_uint * (k+1)
+    Mtrx = KInts * (n + 1)
+    matrix = Mtrx()
 
-    matrix = defaultdict(lambda : defaultdict(int))
     for floor in xrange(1, n + 1):
         matrix[floor][1] = floor
 

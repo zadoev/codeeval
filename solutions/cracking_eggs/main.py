@@ -31,11 +31,11 @@ def solver(k, n):
     >>> #solver(1,1) # [[0, 0], [0, 1]] test init, now not need
     >>> #solver(2,2) # [[0, 0, 0], [0, 1, 1], [0, 2, 1]] test init, now not need
     >>> solver(2, 5)
-    3
+    3L
     >>> solver(2, 6)
-    3
+    3L
     >>> solver(2, 100)
-    14
+    14L
     >>> solver(10, 1000)
     10
 
@@ -46,6 +46,11 @@ def solver(k, n):
     :return: minimum drops for worst keys
     :rtype: int
     """
+
+    ln = int(math.ceil((math.log(n, 2))))
+    if k >= ln:
+        return ln
+
     KInts = c_uint * (k+1)
     Mtrx = KInts * (n + 1)
     matrix = Mtrx()

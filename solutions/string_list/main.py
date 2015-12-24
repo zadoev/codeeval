@@ -24,7 +24,7 @@ Print all of the possible ways to write a string of length N from the characters
 in string S comma delimited in alphabetical order, with no duplicates. E.g.
 """
 
-from itertools import permutations
+from itertools import product
 import sys
 
 
@@ -46,15 +46,11 @@ def solve(n, seq):
     """
     return ','.join(
         list(
-            sorted(
-                map(
-                    lambda x: ''.join(x),
-                    set(
-                        permutations(
-                            reduce(lambda a, b: a + b*n, set(seq), ''),
-                            n
-                        )
-                    )
+            map(
+                lambda x: ''.join(x),
+                product(
+                    sorted(set(seq)),
+                    repeat=n
                 )
             )
         )

@@ -49,9 +49,9 @@ def solve(s1, s2):
     computer = [0]*(s2len+1)
     computer[0] = 1
 
-    for i in range(0, len(s1)):
+    for i in xrange(0, len(s1)):
         last = computer[0]
-        for j in range(0, s2len):
+        for j in xrange(0, s2len):
             this = computer[j+1]
             if s1[i] == s2[j]:
                 computer[j+1] += last
@@ -62,5 +62,4 @@ def solve(s1, s2):
 if __name__ == '__main__':
     with open(sys.argv[1]) as test_cases:
         for line in test_cases:
-            s1, s2 = line.split(',')
-            print solve(s1, s2.rstrip())
+            print solve(*line.rstrip().split(','))

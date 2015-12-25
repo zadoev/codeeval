@@ -1,0 +1,5 @@
+b,b
+babgbag,bag
+rabbbit,rabbit
+rabbbita,rabbit
+aabb,ab

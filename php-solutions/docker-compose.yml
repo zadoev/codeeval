@@ -1,0 +1,4 @@
+php:
+  image: php-phpunit-5.5
+  volumes:
+    - :/code

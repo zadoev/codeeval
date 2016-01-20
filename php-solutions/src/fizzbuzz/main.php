@@ -13,13 +13,13 @@ function solution($line) {
     $result = [];
     foreach(range(1, $count) as $i) {
 
-        if ($i % $divider1 == 0 ) {
-            if ( $i % $divider2 == 0) {
+        if ($i % $divider1 === 0 ) {
+            if ( $i % $divider2 === 0) {
                 $result[] = 'FB';
             } else {
                 $result[] = 'F';
             }
-        } elseif( $i % $divider2 == 0 ) {
+        } elseif( $i % $divider2 === 0 ) {
             $result[] = 'B';
         } else {
             $result[] = $i;
@@ -29,7 +29,7 @@ function solution($line) {
     return implode(' ', $result);
 }
 
-if ( isset($argv[1])) {
+if ( $argv ) {
     $fh = fopen($argv[1], "r");
 
     while ( ($test = fgets($fh)) !== false ) {

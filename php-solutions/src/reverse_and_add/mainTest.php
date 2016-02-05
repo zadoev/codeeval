@@ -9,7 +9,7 @@
 include( __DIR__.DIRECTORY_SEPARATOR.'main.php');
 
 
-class MultiplicationTablesTestCase extends PHPUnit_Framework_TestCase {
+class ReverseAndAddTestCase extends PHPUnit_Framework_TestCase {
     function test_one() {
         $this->assertEquals('1 2', reverse_and_add_solution('1'));
     }

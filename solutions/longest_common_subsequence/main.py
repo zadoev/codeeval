@@ -2,6 +2,8 @@
 __author__ = "zadoev@gmail.com"
 
 Used http://algolist.ru/search/lcs/simple_lcs.php
+
+aaa
 """
 import sys
 from ctypes import c_uint

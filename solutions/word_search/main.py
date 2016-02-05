@@ -21,7 +21,7 @@ POSSIBLE_WAYS = defaultdict(list)
 CHAR_POINTS = defaultdict(list)
 for r in range(0, ROW_CNT):
     for c in range(0, COL_CNT):
-        CHAR_POINTS[MATRIX[r][c]].append((r,c))
+        CHAR_POINTS[MATRIX[r][c]].append((r, c))
         if r-1 >= 0:
             POSSIBLE_WAYS[(r, c)].append((r-1, c))
         if r+1 < ROW_CNT:
